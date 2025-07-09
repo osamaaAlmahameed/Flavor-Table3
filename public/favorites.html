@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorites - Flavor Table</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Your Favorite Recipes</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="randomRecipes.html">Random Recipes</a>
+      <a href="editRecipe.html">Edit Recipe</a>
+    </nav>
+  </header>
+  <main>
+    <section id="recipes" class="recipe-list">
+      <p>Loading recipes...</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Flavor Table</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    async function loadRecipes() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please login to view your favorite recipes.');
+        window.location.href = 'login.html';
+        return;
+      }
+      try {
+        const response = await axios.get('/api/recipes/all', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const recipes = response.data;
+        document.getElementById('recipes').innerHTML = recipes.length
+          ? recipes.map(r => `<div class="recipe-card"><h3>${r.title}</h3></div>`).join('')
+          : '<p>No favorite recipes found.</p>';
+      } catch (error) {
+        alert(error.response?.data?.error || 'Failed to load recipes.');
+        if (error.response?.status === 401) window.location.href = 'login.html';
+      }
+    }
+    loadRecipes();
+  </script>
+</body>
+</html>

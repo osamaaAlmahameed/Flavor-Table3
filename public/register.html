@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Flavor Table</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Register</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="randomRecipes.html">Random Recipes</a>
+      <a href="editRecipe.html">Edit Recipe</a>
+    </nav>
+  </header>
+  <main>
+    <form id="registerForm" class="auth-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2025 Flavor Table</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      try {
+        const response = await axios.post('/api/auth/register', { username, email, password });
+        alert('Registration successful! Please login.');
+        window.location.href = 'login.html';
+      } catch (error) {
+        alert(error.response?.data?.error || 'Registration failed. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>

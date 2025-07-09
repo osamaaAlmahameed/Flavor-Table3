@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Recipe - Flavor Table</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Edit Recipe</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="randomRecipes.html">Random Recipes</a>
+    </nav>
+  </header>
+  <main>
+    <form id="editRecipeForm" class="auth-form">
+      <div class="form-group">
+        <label for="title">Recipe Title</label>
+        <input type="text" id="title" placeholder="Enter recipe title" required>
+      </div>
+      <button type="submit">Save Recipe</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2025 Flavor Table</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('editRecipeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please login to edit recipes.');
+        window.location.href = 'login.html';
+        return;
+      }
+      alert('Recipe editing is under development.');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Flavor Table</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Login</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="register.html">Register</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="randomRecipes.html">Random Recipes</a>
+      <a href="editRecipe.html">Edit Recipe</a>
+    </nav>
+  </header>
+  <main>
+    <form id="loginForm" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2025 Flavor Table</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      try {
+        const response = await axios.post('/api/auth/login', { email, password });
+        localStorage.setItem('token', response.data.token);
+        alert('Login successful!');
+        window.location.href = 'favorites.html';
+      } catch (error) {
+        alert(error.response?.data?.error || 'Login failed. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html>
